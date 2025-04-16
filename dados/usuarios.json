@@ -1,0 +1,23 @@
+[
+    {
+        "id": 2,
+        "nome": "João",
+        "idade": 18,
+        "pontuacoes": [],
+        "tempo_uso": 0
+    },
+    {
+        "id": 3,
+        "nome": "Tiago ",
+        "idade": 40,
+        "pontuacoes": [],
+        "tempo_uso": 0
+    },
+    {
+        "id": 4,
+        "nome": "Iara",
+        "idade": 33,
+        "pontuacoes": [],
+        "tempo_uso": 0
+    }
+]
