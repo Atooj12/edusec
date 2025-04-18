@@ -1,7 +1,17 @@
 import json
 import os
+import sys
 
-CAMINHO_JSON= "dados/usuarios.json"
+# ✅ Define primeiro a função de caminho seguro
+def caminho_absoluto(relativo):
+    if getattr(sys, 'frozen', False):  # se estiver compilado com pyinstaller
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.dirname(__file__)
+    return os.path.join(base_path, relativo)
+
+# ✅ Agora sim define o CAMINHO com base nela
+CAMINHO_JSON = caminho_absoluto("dados/usuarios.json")
 
 def carregar_usuarios():
     if not os.path.exists(CAMINHO_JSON):
@@ -11,7 +21,7 @@ def carregar_usuarios():
         try:
             return json.load(arquivo)
         except json.JSONDecodeError:
-            return[]
+            return []
         
 
 def salvar_usuarios(lista):
