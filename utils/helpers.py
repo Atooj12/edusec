@@ -23,11 +23,9 @@ def carregar_usuarios():
         
 
 def salvar_usuarios(lista):
-    def salvar_usuarios(lista):
-    # Garante que a pasta existe
-        pasta = os.path.dirname(CAMINHO_JSON)
-        if not os.path.exists(pasta):
-            os.makedirs(pasta)
-
-        with open(CAMINHO_JSON, "w", encoding="utf-8") as arquivo:
-            json.dump(lista, arquivo, indent=4, ensure_ascii=False)
+    pasta = os.path.dirname(CAMINHO_JSON)
+    if not os.path.exists(pasta):
+        os.makedirs(pasta)
+        
+    with open(CAMINHO_JSON, "w", encoding="utf-8") as arquivo:
+        json.dump(lista, arquivo, indent=4, ensure_ascii=False)
