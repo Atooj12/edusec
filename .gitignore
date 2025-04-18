@@ -1,2 +1,25 @@
+# 🐍 Arquivos e pastas do Python
 __pycache__/
 *.pyc
+*.pyo
+
+# ⚙️ Ambientes virtuais
+.venv/
+venv/
+
+# 📦 Compilação com PyInstaller
+dist/
+build/
+*.spec
+
+# 📄 Dados locais (serão gerados individualmente em cada máquina)
+dados/usuarios.json
+
+# 📂 Configurações locais de IDEs (opcional)
+.vscode/
+.idea/
+
+# 🛠 Logs ou arquivos temporários
+*.log
+*.tmp
+*.bak
