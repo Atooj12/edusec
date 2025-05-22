@@ -1,4 +1,5 @@
 from estatisticas import calcular_media, calcular_moda, calcular_mediana
+from utils.cripto.cripto import criptografar, descriptografar
 from utils.helpers import carregar_usuarios, salvar_usuarios
 from exercicios import fazer_exercicio
 from colorama import init, Fore, Style
@@ -10,20 +11,20 @@ VERMELHO = Fore.RED
 AMARELO = Fore.YELLOW
 AZUL = Fore.CYAN
 NEGRITO = Style.BRIGHT
-
+NORMAL = Style.RESET_ALL 
 
 def criar_usuario():
     usuarios = carregar_usuarios()
 
-    nome = input(NEGRITO + NEGRITO +"Nome: ")
-    idade = int(input(NEGRITO + NEGRITO + "Idade: "))
+    nome = input(NEGRITO + "Nome: ")
+    idade = int(input(NEGRITO + "Idade: "))
 
     proximo_id = max([u["id"] for u in usuarios], default=0) + 1
 
     novo = {
         "id": proximo_id,
-        "nome": nome,
-        "idade": idade,
+        "nome": criptografar(nome),
+        "idade": criptografar(str(idade)),
         "pontuacoes": [],
         "tempo_uso": 0
     }
@@ -42,7 +43,7 @@ def listar_usuarios():
         print(NEGRITO + "📋 Lista de usuários:")
         for u in usuarios:
             total = sum(u['pontuacoes'])
-            print(f"{u['id']}: {u['nome']} ({u['idade']} anos) - Total de pontos: {total}")
+            print(f"{u['id']}: {descriptografar(u['nome'])} ({descriptografar(u['idade'])} anos) - Total de pontos: {total}")
 
 
 def editar_usuario():
@@ -54,7 +55,7 @@ def editar_usuario():
     print(NEGRITO + "📋 Lista de usuários:")
     for u in usuarios:
         total = sum(u['pontuacoes'])
-        print(f"{u['id']}: {u['nome']} ({u['idade']} anos) - Total de pontos: {total}")
+        print(f"{u['id']}: {descriptografar(u['nome'])} ({descriptografar(u['idade'])} anos) - Total de pontos: {total}")
     try:
         id_a_editar = int(input(NEGRITO + "Digite o ID que planeja editar: "))
     except ValueError:
@@ -65,9 +66,8 @@ def editar_usuario():
         if u['id'] == id_a_editar:
             novo_nome = input(NEGRITO + "Digite o novo nome: ")
             nova_idade = int(input(NEGRITO + "Digite a nova idade: "))
-
-            u['nome'] = novo_nome
-            u['idade'] = nova_idade
+            u['nome'] = criptografar(novo_nome)
+            u['idade'] = criptografar(str(nova_idade))
 
             salvar_usuarios(usuarios)
             print(VERDE + "✅ Usuário editado com sucesso!")
@@ -85,7 +85,7 @@ def excluir_usuario():
     print(NEGRITO + "📋 Lista de usuários:")
     for u in usuarios:
         total = sum(u['pontuacoes'])
-        print(f"{u['id']}: {u['nome']} ({u['idade']} anos) - Total de pontos: {total}")
+        print(f"{u['id']}: {descriptografar(u['nome'])} ({descriptografar(u['idade'])} anos) - Total de pontos: {total}")
     
     try:
         id_a_excluir = int(input(NEGRITO + "Digite o ID que planeja excluir: "))
@@ -122,10 +122,11 @@ def desempenho_geral():
         exercicios = len(u["pontuacoes"])
         tempo = u["tempo_uso"]
 
-        print(f"\n🧑 {u['nome']}:")
-        print(f"  Pontos: {pontos}")
-        print(f"  Exercícios feitos: {exercicios}")
-        print(f"  Tempo total de uso: {tempo} segundos")
+        print(f"\n🧑 {descriptografar(u['nome'])}:")
+        print(f"Idade: {descriptografar(u['idade'])}")
+        print(f"Pontos: {pontos}")
+        print(f"Exercícios feitos: {exercicios}")
+        print(f"Tempo total de uso: {tempo} segundos")
 
         if exercicios > 0:
             usuarios_ativos += 1
@@ -156,8 +157,8 @@ def desempenho_individual(usuario_id):
 
     print(NEGRITO + "\n🧾 Perfil do Usuário")
     print(f"ID: {usuario['id']}")
-    print(f"Nome: {usuario['nome']}")
-    print(f"Idade: {usuario['idade']}")
+    print(f"Nome: {descriptografar(usuario['nome'])}")
+    print(f"Idade: {descriptografar(usuario['idade'])}")
     print(f"Pontuações: {usuario['pontuacoes']}")
     print(f"Total de pontos: {sum(usuario['pontuacoes'])}")
     print(f"Tempo total de uso: {usuario['tempo_uso']} segundos")
@@ -180,10 +181,9 @@ def desempenho_geral_especifico():
         pontos = sum(u["pontuacoes"])
         exercicios = len(u["pontuacoes"])
         tempo = u["tempo_uso"]
-        idade = u["idade"] 
 
-        print(f"\n🧑 {u['nome']}:")
-        print(f"Idade: {idade} anos")
+        print(f"\n🧑 {descriptografar(u['nome'])}:")
+        print(f"Idade: {descriptografar(u['idade'])}")
         print(f"Pontos: {pontos}")
         print(f"Exercícios feitos: {exercicios}")
         print(f"Tempo total de uso: {tempo} segundos")
@@ -242,7 +242,7 @@ def ranking_de_usuarios_ponto():
 
     print(NEGRITO + "\n🏆 RANKING DOS USUÁRIOS POR PONTOS 🏆")
     for i, user in enumerate(ranking_ordenado[:10], start=1):
-        print(f"{i}º lugar: {user['nome']} - {user['pontos']} ponto(s) - {user['exercicios']} quant(s) de exercicios - {user['tempo_uso']} tempo de uso")
+        print(f"{i}º lugar: {descriptografar(user['nome'])} - {user['pontos']} ponto(s) - {user['exercicios']} quant(s) de exercicios - {user['tempo_uso']} tempo de uso")
 
 
 def ranking_de_usuarios_exercicio():
@@ -266,7 +266,7 @@ def ranking_de_usuarios_exercicio():
 
     print(NEGRITO + "\n🏆 RANKING DOS USUÁRIOS POR EXERCICIOS 🏆")
     for i, user in enumerate(ranking_ordenado[:10], start=1):
-        print(f"{i}º lugar: {user['nome']} - {user['exercicios']} quant(s) de exercicios - {user['pontos']} ponto(s) - {user['exercicios']} quant(s) de exercicios - {user['tempo_uso']} tempo de uso")
+        print(f"{i}º lugar: {descriptografar(user['nome'])} - {user['exercicios']} quant(s) de exercicios - {user['pontos']} ponto(s) - {user['exercicios']} quant(s) de exercicios - {user['tempo_uso']} tempo de uso")
 
 
 def ranking_de_usuarios_tempo():
@@ -290,7 +290,7 @@ def ranking_de_usuarios_tempo():
 
     print(NEGRITO + "\n🏆 RANKING DOS USUÁRIOS POR TEMPO 🏆")
     for i, user in enumerate(ranking_ordenado[:10], start=1):
-        print(f"{i}º lugar: {user['nome']} - {user['tempo_uso']} tempo de uso - {user['pontos']} ponto(s) - {user['exercicios']} quant(s) de exercicios")
+        print(f"{i}º lugar: {descriptografar(user['nome'])} - {user['tempo_uso']} tempo de uso - {user['pontos']} ponto(s) - {user['exercicios']} quant(s) de exercicios")
 
 def ver_conteudo():
     print(NEGRITO + "\n📘 CONTEÚDO EDUCATIVO")
@@ -359,7 +359,7 @@ def exibir_menu():
 
             fazer_exercicio(id_usuario)
         elif opcao == "3":
-            print("1. Desempenho Geral")
+            print(NORMAL + "1. Desempenho Geral")
             print("2. Desempenho Geral Especifico")
             print("3. Desempenho individual")
             opcaodes = input(NEGRITO + "Digite a opção que planeja prosseguir: ")
@@ -387,7 +387,7 @@ def exibir_menu():
         elif opcao == "8":
             sobre()
         elif opcao == "9":
-            print("1. Ranking por pontos")
+            print(NORMAL + "1. Ranking por pontos")
             print("2. Ranking por exercicios")
             print("3. Ranking por tempo")
             opcaoRank = input(NEGRITO + "Digite a opção que planeja prosseguir: ")            
