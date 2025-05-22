@@ -1,0 +1,112 @@
+{
+    "Cibersegurança": [
+        {
+            "pergunta": "O que é uma senha forte?",
+            "opcoes": [
+                "a) 123456",
+                "b) sua data de nascimento",
+                "c) uma combinação de letras, números e símbolos"
+            ],
+            "resposta": "c",
+            "explicacao": "Senhas fortes combinam letras, números e símbolos."
+        },
+        {
+            "pergunta": "O que é phishing?",
+            "opcoes": [
+                "a) Um tipo de vírus",
+                "b) Uma tentativa de enganar você para roubar dados",
+                "c) Um antivírus gratuito"
+            ],
+            "resposta": "b",
+            "explicacao": "Phishing é um golpe que tenta roubar dados pessoais."
+        }
+    ],
+    "LGPD": [
+        {
+            "pergunta": "O que é dado pessoal segundo a LGPD?",
+            "opcoes": [
+                "a) Nome e CPF",
+                "b) Marca do celular",
+                "c) Cor da parede"
+            ],
+            "resposta": "a",
+            "explicacao": "Dado pessoal é qualquer informação que identifica uma pessoa."
+        },
+        {
+            "pergunta": "O que significa consentimento na LGPD?",
+            "opcoes": [
+                "a) Compartilhar dados sem avisar",
+                "b) Permissão do usuário para usar seus dados",
+                "c) Usar qualquer dado sem regras"
+            ],
+            "resposta": "b",
+            "explicacao": "Consentimento é quando a pessoa autoriza o uso dos seus dados."
+        }
+    ],
+    "Pensamento Lógico": [
+        {
+            "pergunta": "Qual é o próximo número da sequência? 2, 4, 8, 16, ...",
+            "opcoes": [
+                "a) 18",
+                "b) 32",
+                "c) 20"
+            ],
+            "resposta": "b",
+            "explicacao": "A lógica é multiplicar por 2. O próximo é 32."
+        },
+        {
+            "pergunta": "Se Maria tem 3 maçãs e dá 1 para João, quantas ela tem?",
+            "opcoes": [
+                "a) 3",
+                "b) 1",
+                "c) 2"
+            ],
+            "resposta": "c",
+            "explicacao": "3 - 1 = 2 maçãs."
+        }
+    ],
+    "Programação": [
+        {
+            "pergunta": "O que é uma variável na programação?",
+            "opcoes": [
+                "a) Um valor que pode mudar",
+                "b) Um erro no código",
+                "c) Uma pasta no computador"
+            ],
+            "resposta": "a",
+            "explicacao": "Variável guarda valores que podem mudar durante o programa."
+        },
+        {
+            "pergunta": "Qual comando usamos para repetir algo em Python?",
+            "opcoes": [
+                "a) if",
+                "b) while",
+                "c) print"
+            ],
+            "resposta": "b",
+            "explicacao": "'while' cria loops, repetindo enquanto a condição for verdadeira."
+        }
+    ],
+    "TI Básica": [
+        {
+            "pergunta": "Qual desses é um hardware?",
+            "opcoes": [
+                "a) Google Chrome",
+                "b) Memória RAM",
+                "c) WhatsApp"
+            ],
+            "resposta": "b",
+            "explicacao": "Hardware é a parte física do computador, como memória, HD, processador."
+        },
+        {
+            "pergunta": "O que é software?",
+            "opcoes": [
+                "a) O monitor do computador",
+                "b) O teclado",
+                "c) Um programa como Word ou Chrome"
+            ],
+            "resposta": "c",
+            "explicacao": "Software são os programas, como aplicativos e sistemas."
+        }
+    ]
+}

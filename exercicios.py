@@ -1,5 +1,37 @@
 import time
-from utils.helpers import carregar_usuarios, salvar_usuarios
+import random
+from utils.cripto.cripto import descriptografar
+from utils.helpers import carregar_usuarios, salvar_usuarios, carregar_perguntas
+
+# 🔥 Carrega as perguntas
+perguntas = carregar_perguntas()
+
+if not perguntas:
+    print("⚠️ Nenhuma pergunta encontrada. Verifique o arquivo perguntas.json.")
+
+
+def escolher_tema():
+    print("\n=== Escolha um tema ===")
+    temas = list(perguntas.keys())  # 🚩 Se perguntas estiver vazio, temas também fica vazio
+
+    for i, tema in enumerate(temas, 1):
+        print(f"{i}. {tema}")
+
+    print(f"{len(temas) + 1}. Quiz Misto (todas as áreas)")
+
+    try:
+        escolha = int(input("Digite o número do tema: "))
+        if escolha == len(temas) + 1:
+            return "Misto"
+        elif 1 <= escolha <= len(temas):
+            return temas[escolha - 1]
+        else:
+            print("❌ Opção inválida. Escolhendo Misto por padrão.")
+            return "Misto"
+    except ValueError:
+        print("❌ Opção inválida. Escolhendo Misto por padrão.")
+        return "Misto"
+
 
 
 def fazer_exercicio(usuario_id):
@@ -10,63 +42,44 @@ def fazer_exercicio(usuario_id):
         print("Usuário não encontrado.")
         return
 
-    print(f"\n👋 Olá, {usuario['nome']}! Vamos começar os exercício...\n")
+    nome = descriptografar(usuario['nome'])
+    print(f"\n👋 Olá, {nome}! Vamos começar os exercícios...\n")
 
+    tema = escolher_tema()
     acertos = 0
     inicio = time.time()
 
-    print("Pergunta 1: Qual é o próximo número da sequência? 2, 4, 6, 8, ...")
-    resposta1 = input("Sua resposta: ")
-
-    if resposta1.strip().lower() == "10":
-        print("✅ Correto!")
-        acertos += 1
+    # 🔀 Escolher perguntas
+    if tema == "Misto":
+        todas_perguntas = []
+        for lista in perguntas.values():
+            todas_perguntas.extend(lista)
+        perguntas_quiz = random.sample(todas_perguntas, min(5, len(todas_perguntas)))
     else:
-        print("❌ Errado. Resposta correta: 10")
+        perguntas_quiz = random.sample(perguntas[tema], min(5, len(perguntas[tema])))
 
-    print("Pergunta 2: Qual é o próximo número da sequência? 5, 10, 20, 40, ...")
-    resposta2 = input("Sua resposta: ")
+    # 🔄 Loop das perguntas
+    for q in perguntas_quiz:
+        print("\n📌", q["pergunta"])
+        for opcao in q["opcoes"]:
+            print(opcao)
 
-    if resposta2.strip().lower() == "80":
-        print("✅ Correto!")
-        acertos += 1
-    else:
-        print("❌ Errado. Resposta correta: 80")
+        resposta = input("Sua resposta (a, b ou c): ").strip().lower()
 
-    print("Pergunta 3: Qual é o próximo número da sequência? 1, 3, 9, 27, ...")
-    resposta2 = input("Sua resposta: ")
-
-    if resposta2.strip().lower() == "81":
-        print("✅ Correto!")
-        acertos += 1
-    else:
-        print("❌ Errado. Resposta correta: 81")
-
-    print("Pergunta 4: Qual o valor de 2 * (3 + 4)?")
-    resposta2 = input("Sua resposta: ")
-
-    if resposta2.strip().lower() == "14":
-        print("✅ Correto!")
-        acertos += 1
-    else:
-        print("❌ Errado. Resposta correta: 14")
-
-    print("Pergunta 5: Se 2 + 2 = 4 e 4 + 4 = 8, quanto é 8 + 8?")
-    resposta2 = input("Sua resposta: ")
-
-    if resposta2.strip().lower() == "16":
-        print("✅ Correto!")
-        acertos += 1
-    else:
-        print("❌ Errado. Resposta correta: 16")
+        if resposta == q["resposta"]:
+            print("✅ Correto!")
+            acertos += 1
+        else:
+            print(f"❌ Errado. {q['explicacao']}")
 
     fim = time.time()
     tempo = round(fim - inicio)
 
+    # 💾 Salvar pontuação e tempo
     usuario["pontuacoes"].append(acertos)
     usuario["tempo_uso"] += tempo
 
     salvar_usuarios(usuarios)
 
-    print(f"\n🏁 Fim do exercício! Você acertou {acertos} pergunta(s).")
+    print(f"\n🏁 Fim do exercício! Você acertou {acertos} de {len(perguntas_quiz)} perguntas.")
     print(f"⏱️ Tempo gasto: {tempo} segundos.")
