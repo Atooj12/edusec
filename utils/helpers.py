@@ -3,11 +3,9 @@ import os
 import sys
 
 def caminho_absoluto(relativo):
-    if getattr(sys, 'frozen', False):  # se estiver compilado com pyinstaller
-        base_path = os.path.dirname(sys.executable)
-    else:
-        base_path = os.path.dirname(__file__)
-    return os.path.join(base_path, relativo)
+    base_path = os.path.dirname(os.path.abspath(__file__))  # pega o caminho absoluto da pasta atual
+    base_projeto = os.path.dirname(base_path)  # sobe um nível, pra raiz do projeto
+    return os.path.join(base_projeto, relativo)
 
 
 # ================== USUÁRIOS ==================

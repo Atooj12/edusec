@@ -1,25 +1,31 @@
-# 🐍 Arquivos e pastas do Python
+# Ignore arquivos Python compilados
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
+*.pyd
 
-# ⚙️ Ambientes virtuais
-.venv/
+# Ignore ambiente virtual (se tiver)
 venv/
+.env/
+.env.bak/
 
-# 📦 Compilação com PyInstaller
-dist/
-build/
-*.spec
+# Ignore arquivos de chaves privadas e sensíveis
+chave_privada.pem
 
-# 📄 Dados locais (serão gerados individualmente em cada máquina)
+# Dados do sistema (se quiser proteger dados locais)
 dados/usuarios.json
+dados/exercicios.json
 
-# 📂 Configurações locais de IDEs (opcional)
-.vscode/
-.idea/
-
-# 🛠 Logs ou arquivos temporários
+# Arquivos de log (se tiver)
 *.log
-*.tmp
-*.bak
+
+# Ignore arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignore arquivos do Replit (se usar)
+.replit
+*.replit
+
+# Ignore arquivos do VSCode (se usar)
+.vscode/
